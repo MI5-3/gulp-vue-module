@@ -3,7 +3,6 @@ var path        = require("path");
 var parse5      = require('parse5');
 var gutil       = require('gulp-util');
 var through     = require("through2");
-var sass        = require("node-sass");
 var PLUGIN_NAME = 'gulp-vue-module';
 var LOG_PREFIX  = '[' + PLUGIN_NAME + '] ';
 
@@ -102,33 +101,6 @@ module.exports = function(options) {
                                 contents.style = '{url : "' + href + '"}';
                             }
                         }
-                        else if (lang && (lang === "sass" || lang === "scss")) {
-                            contents.style = [];
-
-                            style.split("\n").forEach(function(line){
-                                if (line) contents.style.push(line);
-                            });
-                            
-                            var result,
-                                sassRenderOptions = {
-                                    outputStyle    : "compressed",
-                                    indentedSyntax : (lang === "sass") ? true : false,
-                                };
-
-                            if (href) {
-                                sassRenderOptions.file = href;
-                            } else {
-                                sassRenderOptions.data = contents.style.join("\n");
-                            }
-
-                            result = sass.renderSync(sassRenderOptions);
-                            result = result.css.toString().replace("\n", "");
-
-                            if (result !== "") {
-                                contents.style = '{content : "' + result + '"}';
-                            }
-                        }
-                    }
                     
                     if (type === "template") {
                         includeFileName = getAttribute(node, 'include');

@@ -101,6 +101,7 @@ module.exports = function(options) {
                                 contents.style = '{url : "' + href + '"}';
                             }
                         }
+                    }
                     
                     if (type === "template") {
                         includeFileName = getAttribute(node, 'include');
